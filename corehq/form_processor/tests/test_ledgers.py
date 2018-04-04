@@ -276,10 +276,10 @@ class LedgerTests(TestCase):
         # with mock.patch('corehq.form_processor.backends.couch.processor.FormProcessorCouch.save_processed_models', new=mocked_save) as save_fn:
         #     result = submit_form_locally(instance=form_xml, domain=DOMAIN)
 
-
-        from corehq.apps.commtrack.processing import commit_stock
-        mocked_save = mock.Mock(side_effect=second_form_submission, wraps=commit_stock)
-        with mock.patch('corehq.apps.commtrack.processing.commit_stock', new=mocked_save) as save_fn:
+        from corehq.form_processor.submission_post import SubmissionPost
+        mocked_save = mock.Mock(side_effect=second_form_submission, wraps=SubmissionPost._mockable_post_save)
+        with mock.patch('corehq.form_processor.submission_post.SubmissionPost._mockable_post_save',
+                        new=mocked_save) as save_fn:
             submit_form_locally(instance=form_xml, domain=DOMAIN)
 
     def _print_stock_state(self, form_id):
@@ -302,9 +302,9 @@ class LedgerTestsSQL(LedgerTests):
         # mocked_save = mock.Mock(side_effect=second_form_submission, wraps=FormProcessorSQL.save_processed_models)
         # with mock.patch('corehq.form_processor.backends.sql.processor.FormProcessorSQL.save_processed_models', new=mocked_save) as save_fn:
 
-        from corehq.form_processor.backends.sql.dbaccessors import LedgerAccessorSQL
-        mocked_save = mock.Mock(side_effect=second_form_submission, wraps=LedgerAccessorSQL.save_ledger_values)
-        with mock.patch('corehq.form_processor.backends.sql.dbaccessors.LedgerAccessorSQL.save_ledger_values', new=mocked_save) as save_fn:
+        from corehq.form_processor.submission_post import SubmissionPost
+        mocked_save = mock.Mock(side_effect=second_form_submission, wraps=SubmissionPost._mockable_post_save)
+        with mock.patch('corehq.form_processor.submission_post.SubmissionPost._mockable_post_save', new=mocked_save) as save_fn:
             submit_form_locally(instance=form_xml, domain=DOMAIN)
 
     def _print_stock_state(self, form_id):

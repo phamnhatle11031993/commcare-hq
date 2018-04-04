@@ -363,6 +363,8 @@ class SubmissionPost(object):
                     case_stock_result.stock_result
                 )
 
+                self._mockable_post_save()
+
                 if unfinished_submission_stub:
                     unfinished_submission_stub.saved = True
                     unfinished_submission_stub.save()
@@ -370,6 +372,10 @@ class SubmissionPost(object):
                 self.do_post_save_actions(case_db, xforms, case_stock_result)
         except PostSaveError:
             return "Error performing post save operations"
+
+    @staticmethod
+    def _mockable_post_save():
+        pass
 
     @staticmethod
     def do_post_save_actions(case_db, xforms, case_stock_result):
