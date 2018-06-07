@@ -809,14 +809,6 @@ MOBILE_UCR = StaticToggle(
     always_enabled={'icds-cas'}
 )
 
-RESTRICT_WEB_USERS_BY_LOCATION = StaticToggle(
-    'restrict_web_users_by_location',
-    "(Deprecated) Allow project to restrict web user permissions by location",
-    TAG_DEPRECATED,
-    namespaces=[NAMESPACE_DOMAIN],
-    description="Don't enable this flag."
-)
-
 API_THROTTLE_WHITELIST = StaticToggle(
     'api_throttle_whitelist',
     ('API throttle whitelist'),
