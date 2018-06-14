@@ -133,7 +133,6 @@ class TestSubscriptionForm(BaseAccountingTest):
         self.account = BillingAccount.get_or_create_account_by_domain(
             self.domain.name, created_by=self.web_user.username
         )[0]
-        self.account.save()
         self.customer_account = BillingAccount.get_or_create_account_by_domain(
             self.domain2.name, created_by=self.web_user.username
         )[0]
